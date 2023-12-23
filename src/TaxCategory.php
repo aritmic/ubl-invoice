@@ -40,16 +40,17 @@ class TaxCategory implements XmlSerializable
     }
 
     /**
-     * @param string $id
-     * @param array $attributes
+     * @param string|null $id
+     * @param array|null  $attributes
      * @return TaxCategory
      */
-    public function setId(?string $id, $attributes = null): TaxCategory
+    public function setId(?string $id, array $attributes = null): TaxCategory
     {
         $this->id = $id;
         if (isset($attributes)) {
             $this->idAttributes = $attributes;
         }
+
         return $this;
     }
 
@@ -62,12 +63,13 @@ class TaxCategory implements XmlSerializable
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      * @return TaxCategory
      */
     public function setName(?string $name): TaxCategory
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -98,7 +100,7 @@ class TaxCategory implements XmlSerializable
     }
 
     /**
-     * @param TaxScheme $taxScheme
+     * @param TaxScheme|null $taxScheme
      * @return TaxCategory
      */
     public function setTaxScheme(?TaxScheme $taxScheme): TaxCategory
@@ -116,7 +118,7 @@ class TaxCategory implements XmlSerializable
     }
 
     /**
-     * @param string $taxExemptionReason
+     * @param string|null $taxExemptionReason
      * @return TaxCategory
      */
     public function setTaxExemptionReason(?string $taxExemptionReason): TaxCategory
@@ -134,7 +136,7 @@ class TaxCategory implements XmlSerializable
     }
 
     /**
-     * @param string $taxExemptionReason
+     * @param string|null $taxExemptionReasonCode
      * @return TaxCategory
      */
     public function setTaxExemptionReasonCode(?string $taxExemptionReasonCode): TaxCategory
@@ -155,7 +157,7 @@ class TaxCategory implements XmlSerializable
             throw new InvalidArgumentException('Missing taxcategory id');
         }
 
-        if ($this->getPercent() === null) {
+        if ($this->getId() !== UNCL5305::OUTSIDE_TAX_SCOPE && $this->getPercent() === null) {
             throw new InvalidArgumentException('Missing taxcategory percent');
         }
     }
@@ -183,9 +185,12 @@ class TaxCategory implements XmlSerializable
                 Schema::CBC . 'Name' => $this->name,
             ]);
         }
-        $writer->write([
-            Schema::CBC . 'Percent' => number_format($this->percent, 2, '.', ''),
-        ]);
+
+        if ($this->name !== null) {
+            $writer->write([
+                Schema::CBC . 'Percent' => number_format($this->percent, 2, '.', ''),
+            ]);
+        }
 
         if ($this->taxExemptionReasonCode !== null) {
             $writer->write([
