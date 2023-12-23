@@ -1,5 +1,5 @@
 {
-    "name": "num-num/ubl-invoice",
+    "name": "aritmic/ubl-invoice",
     "description": "A modern object-oriented PHP library to create valid UBL and Peppol BIS 3.0 files",
     "keywords": [
         "ubl",
@@ -17,11 +17,19 @@
         "peppol invoice",
         "e-invoice",
         "einvoice",
-        "euinvoice"
+        "euinvoice",
+        "efactura",
+        "e-factura"
     ],
     "homepage": "https://github.com/num-num/ubl-invoice",
     "license": "MIT",
     "authors": [
+        {
+            "name": "ARITMIC Software",
+            "email": "hello@aritmic.software",
+            "homepage": "https://aritmic.software",
+            "role": "Developer"
+        },
         {
             "name": "Bert Devriese",
             "email": "bert@numnum.be",
