@@ -40,6 +40,7 @@ class Invoice implements XmlSerializable
     private $delivery;
     private $orderReference;
     private $contractDocumentReference;
+    private $billingReference;
 
     /**
      * @return string
@@ -553,6 +554,30 @@ class Invoice implements XmlSerializable
     }
 
     /**
+     * Get the reference to the invoice
+     *
+     * @return ?BillingReference
+     */
+    public function getBillingReference(): ?BillingReference
+    {
+        return $this->billingReference;
+    }
+
+    /**
+     * Set the reference to the invoice that is being credited
+     *
+     * @param BillingReference $billingReference
+     *
+     * @return Invoice
+     */
+    public function setBillingReference(BillingReference $billingReference): Invoice
+    {
+        $this->billingReference = $billingReference;
+
+        return $this;
+    }
+
+    /**
      * The validate function that is called during xml writing to valid the data of the object.
      *
      * @return void
@@ -649,6 +674,10 @@ class Invoice implements XmlSerializable
 
         $writer->write([
             Schema::CBC . 'DocumentCurrencyCode' => $this->documentCurrencyCode,
+        ]);
+
+        $writer->write([
+            Schema::CAC . 'BillingReference' => $this->billingReference
         ]);
 
         if ($this->accountingCostCode !== null) {
