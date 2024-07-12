@@ -676,9 +676,11 @@ class Invoice implements XmlSerializable
             Schema::CBC . 'DocumentCurrencyCode' => $this->documentCurrencyCode,
         ]);
 
-        $writer->write([
-            Schema::CAC . 'BillingReference' => $this->billingReference
-        ]);
+        if ($this->billingReference !== null) {
+            $writer->write([
+                Schema::CAC . 'BillingReference' => $this->billingReference
+            ]);
+        }
 
         if ($this->accountingCostCode !== null) {
             $writer->write([
