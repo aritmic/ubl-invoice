@@ -186,7 +186,7 @@ class TaxCategory implements XmlSerializable
             ]);
         }
 
-        if ($this->name !== null) {
+        if ($this->percent !== null) {
             $writer->write([
                 Schema::CBC . 'Percent' => number_format($this->percent, 2, '.', ''),
             ]);
